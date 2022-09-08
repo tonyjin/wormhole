@@ -27,6 +27,7 @@ import {
   isEVMChain,
   isTerraChain,
   CHAIN_ID_PYTHNET,
+  CHAIN_ID_HEDERA,
 } from "./consts";
 
 /**
@@ -103,6 +104,8 @@ export const tryUint8ArrayToNative = (
     throw Error("uint8ArrayToNative: Sui not supported yet.");
   } else if (chainId === CHAIN_ID_APTOS) {
     throw Error("uint8ArrayToNative: Aptos not supported yet.");
+  } else if (chainId === CHAIN_ID_HEDERA) {
+    return hexZeroPad(hexValue(a), 20);
   } else if (chainId === CHAIN_ID_UNSET) {
     throw Error("uint8ArrayToNative: Chain id unset");
   } else {
@@ -223,6 +226,8 @@ export const tryNativeToHexString = (
     throw Error("hexToNativeString: Sui not supported yet.");
   } else if (chainId === CHAIN_ID_APTOS) {
     throw Error("hexToNativeString: Aptos not supported yet.");
+  } else if (chainId === CHAIN_ID_HEDERA) {
+    return uint8ArrayToHex(zeroPad(arrayify(address), 32));
   } else if (chainId === CHAIN_ID_UNSET) {
     throw Error("hexToNativeString: Chain id unset");
   } else {
