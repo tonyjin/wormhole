@@ -1,119 +1,47 @@
-use cw20::{
-    BalanceResponse,
-    TokenInfoResponse,
-};
-use cw20_base::msg::{
-    ExecuteMsg as TokenMsg,
-    QueryMsg as TokenQuery,
-};
+use cw20::{BalanceResponse, TokenInfoResponse};
+use cw20_base::msg::{ExecuteMsg as TokenMsg, QueryMsg as TokenQuery};
 use cw20_wrapped_2::msg::{
-    ExecuteMsg as WrappedMsg,
-    InitHook,
-    InstantiateMsg as WrappedInit,
-    QueryMsg as WrappedQuery,
+    ExecuteMsg as WrappedMsg, InitHook, InstantiateMsg as WrappedInit, QueryMsg as WrappedQuery,
     WrappedAssetInfoResponse,
 };
 use std::{
-    cmp::{
-        max,
-        min,
-    },
+    cmp::{max, min},
     str::FromStr,
 };
-use terraswap::asset::{
-    Asset,
-    AssetInfo,
-};
+use terraswap::asset::{Asset, AssetInfo};
 
 use wormhole::{
     byte_utils::{
-        extend_address_to_32,
-        extend_address_to_32_array,
-        extend_string_to_32,
-        get_string_from_32,
+        extend_address_to_32, extend_address_to_32_array, extend_string_to_32, get_string_from_32,
         ByteUtils,
     },
     error::ContractError,
-    msg::{
-        ExecuteMsg as WormholeExecuteMsg,
-        QueryMsg as WormholeQueryMsg,
-    },
-    state::{
-        vaa_archive_add,
-        vaa_archive_check,
-        GovernancePacket,
-        ParsedVAA,
-    },
+    msg::{ExecuteMsg as WormholeExecuteMsg, QueryMsg as WormholeQueryMsg},
+    state::{vaa_archive_add, vaa_archive_check, GovernancePacket, ParsedVAA},
 };
 
 #[allow(unused_imports)]
 use cosmwasm_std::entry_point;
 
 use cosmwasm_std::{
-    coin,
-    to_binary,
-    BankMsg,
-    Binary,
-    CanonicalAddr,
-    CosmosMsg,
-    Deps,
-    DepsMut,
-    Empty,
-    Env,
-    MessageInfo,
-    QueryRequest,
-    Reply,
-    Response,
-    StdError,
-    StdResult,
-    SubMsg,
-    Uint128,
-    WasmMsg,
+    coin, to_binary, BankMsg, Binary, CanonicalAddr, CosmosMsg, Deps, DepsMut, Empty, Env,
+    MessageInfo, QueryRequest, Reply, Response, StdError, StdResult, SubMsg, Uint128, WasmMsg,
     WasmQuery,
 };
 
 use crate::{
     msg::{
-        ExecuteMsg,
-        ExternalIdResponse,
-        InstantiateMsg,
-        IsVaaRedeemedResponse,
-        MigrateMsg,
-        QueryMsg,
-        TransferInfoResponse,
-        WrappedRegistryResponse,
+        ExecuteMsg, ExternalIdResponse, InstantiateMsg, IsVaaRedeemedResponse, MigrateMsg,
+        QueryMsg, TransferInfoResponse, WrappedRegistryResponse,
     },
     state::{
-        bridge_contracts,
-        bridge_contracts_read,
-        bridge_deposit,
-        config,
-        config_read,
-        is_wrapped_asset,
-        is_wrapped_asset_read,
-        receive_native,
-        send_native,
-        wrapped_asset,
-        wrapped_asset_read,
-        wrapped_asset_seq,
-        wrapped_asset_seq_read,
-        wrapped_transfer_tmp,
-        Action,
-        AssetMeta,
-        ConfigInfo,
-        RegisterChain,
-        TokenBridgeMessage,
-        TransferInfo,
-        TransferState,
-        TransferWithPayloadInfo,
-        UpgradeContract,
+        bridge_contracts, bridge_contracts_read, bridge_deposit, config, config_read,
+        is_wrapped_asset, is_wrapped_asset_read, receive_native, send_native, wrapped_asset,
+        wrapped_asset_read, wrapped_asset_seq, wrapped_asset_seq_read, wrapped_transfer_tmp,
+        Action, AssetMeta, ConfigInfo, RegisterChain, TokenBridgeMessage, TransferInfo,
+        TransferState, TransferWithPayloadInfo, UpgradeContract,
     },
-    token_address::{
-        ContractId,
-        ExternalTokenId,
-        TokenId,
-        WrappedCW20,
-    },
+    token_address::{ContractId, ExternalTokenId, TokenId, WrappedCW20},
 };
 
 type HumanAddr = String;
@@ -270,7 +198,6 @@ pub fn execute(deps: DepsMut, env: Env, info: MessageInfo, msg: ExecuteMsg) -> S
         ExecuteMsg::SubmitVaa { data } => submit_vaa(deps, env, info, &data),
 
         // The following actions are disabled in "shutdown" mode
-
         #[cfg(feature = "full")]
         ExecuteMsg::RegisterAssetHook {
             chain,
@@ -336,7 +263,7 @@ pub fn execute(deps: DepsMut, env: Env, info: MessageInfo, msg: ExecuteMsg) -> S
 
         // When in "shutdown" mode, we reject any other action
         #[cfg(not(feature = "full"))]
-        _ => Err(StdError::generic_err("Invalid during shutdown mode"))
+        _ => Err(StdError::generic_err("Invalid during shutdown mode")),
     }
 }
 
