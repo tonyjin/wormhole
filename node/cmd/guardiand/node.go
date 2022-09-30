@@ -1013,39 +1013,39 @@ func runNode(cmd *cobra.Command, args []string) {
 			return err
 		}
 		if err := supervisor.Run(ctx, "avalanchewatch",
-			ethereum.NewEthWatcher(*avalancheRPC, avalancheContractAddr, "avalanche", common.ReadinessAvalancheSyncing, vaa.ChainIDAvalanche, lockC, nil, 1, chainObsvReqC[vaa.ChainIDAvalanche], batchC, chainBatchReqC[vaa.ChainIDAvalanche], *unsafeDevMode).Run); err != nil {
+			evm.NewEthWatcher(*avalancheRPC, avalancheContractAddr, "avalanche", common.ReadinessAvalancheSyncing, vaa.ChainIDAvalanche, lockC, nil, 1, chainObsvReqC[vaa.ChainIDAvalanche], batchC, chainBatchReqC[vaa.ChainIDAvalanche], *unsafeDevMode).Run); err != nil {
 			return err
 		}
 		if err := supervisor.Run(ctx, "oasiswatch",
-			ethereum.NewEthWatcher(*oasisRPC, oasisContractAddr, "oasis", common.ReadinessOasisSyncing, vaa.ChainIDOasis, lockC, nil, 1, chainObsvReqC[vaa.ChainIDOasis], batchC, chainBatchReqC[vaa.ChainIDOasis], *unsafeDevMode).Run); err != nil {
+			evm.NewEthWatcher(*oasisRPC, oasisContractAddr, "oasis", common.ReadinessOasisSyncing, vaa.ChainIDOasis, lockC, nil, 1, chainObsvReqC[vaa.ChainIDOasis], batchC, chainBatchReqC[vaa.ChainIDOasis], *unsafeDevMode).Run); err != nil {
 			return err
 		}
 		if err := supervisor.Run(ctx, "aurorawatch",
-			ethereum.NewEthWatcher(*auroraRPC, auroraContractAddr, "aurora", common.ReadinessAuroraSyncing, vaa.ChainIDAurora, lockC, nil, 1, chainObsvReqC[vaa.ChainIDAurora], batchC, chainBatchReqC[vaa.ChainIDAurora], *unsafeDevMode).Run); err != nil {
+			evm.NewEthWatcher(*auroraRPC, auroraContractAddr, "aurora", common.ReadinessAuroraSyncing, vaa.ChainIDAurora, lockC, nil, 1, chainObsvReqC[vaa.ChainIDAurora], batchC, chainBatchReqC[vaa.ChainIDAurora], *unsafeDevMode).Run); err != nil {
 			return err
 		}
 		if err := supervisor.Run(ctx, "fantomwatch",
-			ethereum.NewEthWatcher(*fantomRPC, fantomContractAddr, "fantom", common.ReadinessFantomSyncing, vaa.ChainIDFantom, lockC, nil, 1, chainObsvReqC[vaa.ChainIDFantom], batchC, chainBatchReqC[vaa.ChainIDFantom], *unsafeDevMode).Run); err != nil {
+			evm.NewEthWatcher(*fantomRPC, fantomContractAddr, "fantom", common.ReadinessFantomSyncing, vaa.ChainIDFantom, lockC, nil, 1, chainObsvReqC[vaa.ChainIDFantom], batchC, chainBatchReqC[vaa.ChainIDFantom], *unsafeDevMode).Run); err != nil {
 			return err
 		}
 		if err := supervisor.Run(ctx, "karurawatch",
-			ethereum.NewEthWatcher(*karuraRPC, karuraContractAddr, "karura", common.ReadinessKaruraSyncing, vaa.ChainIDKarura, lockC, nil, 1, chainObsvReqC[vaa.ChainIDKarura], batchC, chainBatchReqC[vaa.ChainIDKarura], *unsafeDevMode).Run); err != nil {
+			evm.NewEthWatcher(*karuraRPC, karuraContractAddr, "karura", common.ReadinessKaruraSyncing, vaa.ChainIDKarura, lockC, nil, 1, chainObsvReqC[vaa.ChainIDKarura], batchC, chainBatchReqC[vaa.ChainIDKarura], *unsafeDevMode).Run); err != nil {
 			return err
 		}
 		if err := supervisor.Run(ctx, "acalawatch",
-			ethereum.NewEthWatcher(*acalaRPC, acalaContractAddr, "acala", common.ReadinessAcalaSyncing, vaa.ChainIDAcala, lockC, nil, 1, chainObsvReqC[vaa.ChainIDAcala], batchC, chainBatchReqC[vaa.ChainIDAcala], *unsafeDevMode).Run); err != nil {
+			evm.NewEthWatcher(*acalaRPC, acalaContractAddr, "acala", common.ReadinessAcalaSyncing, vaa.ChainIDAcala, lockC, nil, 1, chainObsvReqC[vaa.ChainIDAcala], batchC, chainBatchReqC[vaa.ChainIDAcala], *unsafeDevMode).Run); err != nil {
 			return err
 		}
 		if err := supervisor.Run(ctx, "klaytnwatch",
-			ethereum.NewEthWatcher(*klaytnRPC, klaytnContractAddr, "klaytn", common.ReadinessKlaytnSyncing, vaa.ChainIDKlaytn, lockC, nil, 1, chainObsvReqC[vaa.ChainIDKlaytn], batchC, chainBatchReqC[vaa.ChainIDKlaytn], *unsafeDevMode).Run); err != nil {
+			evm.NewEthWatcher(*klaytnRPC, klaytnContractAddr, "klaytn", common.ReadinessKlaytnSyncing, vaa.ChainIDKlaytn, lockC, nil, 1, chainObsvReqC[vaa.ChainIDKlaytn], batchC, chainBatchReqC[vaa.ChainIDKlaytn], *unsafeDevMode).Run); err != nil {
 			return err
 		}
 		if err := supervisor.Run(ctx, "celowatch",
-			ethereum.NewEthWatcher(*celoRPC, celoContractAddr, "celo", common.ReadinessCeloSyncing, vaa.ChainIDCelo, lockC, nil, 1, chainObsvReqC[vaa.ChainIDCelo], batchC, chainBatchReqC[vaa.ChainIDCelo], *unsafeDevMode).Run); err != nil {
+			evm.NewEthWatcher(*celoRPC, celoContractAddr, "celo", common.ReadinessCeloSyncing, vaa.ChainIDCelo, lockC, nil, 1, chainObsvReqC[vaa.ChainIDCelo], batchC, chainBatchReqC[vaa.ChainIDCelo], *unsafeDevMode).Run); err != nil {
 			return err
 		}
 		if err := supervisor.Run(ctx, "moonbeamwatch",
-			ethereum.NewEthWatcher(*moonbeamRPC, moonbeamContractAddr, "moonbeam", common.ReadinessMoonbeamSyncing, vaa.ChainIDMoonbeam, lockC, nil, 1, chainObsvReqC[vaa.ChainIDMoonbeam], batchC, chainBatchReqC[vaa.ChainIDMoonbeam], *unsafeDevMode).Run); err != nil {
+			evm.NewEthWatcher(*moonbeamRPC, moonbeamContractAddr, "moonbeam", common.ReadinessMoonbeamSyncing, vaa.ChainIDMoonbeam, lockC, nil, 1, chainObsvReqC[vaa.ChainIDMoonbeam], batchC, chainBatchReqC[vaa.ChainIDMoonbeam], *unsafeDevMode).Run); err != nil {
 			return err
 		}
 

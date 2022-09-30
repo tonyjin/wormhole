@@ -397,16 +397,16 @@ func (w *Watcher) Run(ctx context.Context) error {
 			select {
 			case <-ctx.Done():
 				return
-			case r := <-e.batchReqC:
+			case r := <-w.batchReqC:
 				// This can't happen unless there is a programming error - the caller
 				// is expected to send us only requests for our chainID.
-				if r.EmitterChain != e.chainID {
+				if r.EmitterChain != w.chainID {
 					panic("invalid chain ID")
 				}
 
 				tx := r.TransactionID
 				logger.Info("received batch request",
-					zap.String("eth_network", e.networkName),
+					zap.String("eth_network", w.networkName),
 					zap.String("tx_hash", tx.Hex()))
 
 				// SECURITY: Load the block number before requesting the transaction to avoid a
@@ -419,30 +419,30 @@ func (w *Watcher) Run(ctx context.Context) error {
 				blockNumberU := atomic.LoadUint64(&currentBlockNumber)
 				if blockNumberU == 0 {
 					logger.Error("no block number available, ignoring batch request",
-						zap.String("eth_network", e.networkName))
+						zap.String("eth_network", w.networkName))
 					continue
 				}
 
 				timeout, cancel := context.WithTimeout(ctx, 5*time.Second)
-				_, msgs, err := MessageEventsForTransaction(timeout, e.ethIntf, e.contract, e.chainID, tx)
+				_, msgs, err := MessageEventsForTransaction(timeout, w.ethConn, w.contract, w.chainID, tx)
 				cancel()
 
 				if err != nil {
 					logger.Error("failed to process batch request",
-						zap.Error(err), zap.String("eth_network", e.networkName))
+						zap.Error(err), zap.String("eth_network", w.networkName))
 					continue
 				}
 
 				logger.Info("got message batch data",
 					zap.Int("num_messages", len(msgs)),
-					zap.String("eth_network", e.networkName),
+					zap.String("eth_network", w.networkName),
 					zap.String("tx_hash", tx.Hex()))
 
 				b := &common.BatchMessage{
 					BatchMessageID: *r,
 					Messages:       msgs,
 				}
-				e.batchC <- b
+				w.batchC <- b
 			}
 		}
 	}()
