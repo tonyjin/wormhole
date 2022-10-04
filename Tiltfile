@@ -516,7 +516,7 @@ if ci_tests:
         "spydk-ci-tests",
         labels = ["ci"],
         trigger_mode = trigger_mode,
-        resource_deps = ["guardian"],
+        resource_deps = ["guardian", "spy"],
     )
 
 # e2e
