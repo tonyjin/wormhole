@@ -156,6 +156,8 @@ type Processor struct {
 	devnetNumGuardians uint
 	devnetEthRPC       string
 
+	wormchainLCD string
+
 	attestationEvents *reporter.AttestationEventReporter
 
 	logger *zap.Logger
@@ -201,6 +203,7 @@ func NewProcessor(
 	devnetMode bool,
 	devnetNumGuardians uint,
 	devnetEthRPC string,
+	wormchainLCD string,
 	attestationEvents *reporter.AttestationEventReporter,
 	notifier *discord.DiscordNotifier,
 	g *governor.ChainGovernor,
@@ -224,6 +227,8 @@ func NewProcessor(
 		devnetNumGuardians: devnetNumGuardians,
 		devnetEthRPC:       devnetEthRPC,
 		db:                 db,
+
+		wormchainLCD: wormchainLCD,
 
 		attestationEvents: attestationEvents,
 
