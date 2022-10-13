@@ -150,6 +150,9 @@ var (
 	arbitrumRPC      *string
 	arbitrumContract *string
 
+	optimismRPC      *string
+	optimismContract *string
+
 	logLevel *string
 
 	unsafeDevMode   *bool
@@ -278,6 +281,9 @@ func init() {
 
 	arbitrumRPC = NodeCmd.Flags().String("arbitrumRPC", "", "Arbitrum RPC URL")
 	arbitrumContract = NodeCmd.Flags().String("arbitrumContract", "", "Arbitrum contract address")
+
+	optimismRPC = NodeCmd.Flags().String("optimismRPC", "", "Optimism RPC URL")
+	optimismContract = NodeCmd.Flags().String("optimismContract", "", "Optimism contract address")
 
 	logLevel = NodeCmd.Flags().String("logLevel", "info", "Logging level (debug, info, warn, error, dpanic, panic, fatal)")
 
@@ -450,6 +456,9 @@ func runNode(cmd *cobra.Command, args []string) {
 		if *arbitrumContract == "" {
 			*arbitrumContract = devnet.GanacheWormholeContractAddress.Hex()
 		}
+		if *optimismContract == "" {
+			*optimismContract = devnet.GanacheWormholeContractAddress.Hex()
+		}
 	}
 
 	// Verify flags
@@ -592,6 +601,9 @@ func runNode(cmd *cobra.Command, args []string) {
 		} else if *arbitrumContract != "" {
 			logger.Fatal("If --arbitrumContract is specified, then --arbitrumRPC is required")
 		}
+		if (*optimismRPC == "") != (*optimismContract == "") {
+			logger.Fatal("Both --optimismContract and --optimismRPC must be set together or both unset")
+		}
 	} else {
 		if *ethRopstenRPC != "" {
 			logger.Fatal("Please do not specify --ethRopstenRPC in non-testnet mode")
@@ -619,6 +631,12 @@ func runNode(cmd *cobra.Command, args []string) {
 		}
 		if *arbitrumContract != "" && !*unsafeDevMode {
 			logger.Fatal("Please do not specify --arbitrumContract")
+		}
+		if *optimismRPC != "" && !*unsafeDevMode {
+			logger.Fatal("Please do not specify --optimismRPC")
+		}
+		if *optimismContract != "" && !*unsafeDevMode {
+			logger.Fatal("Please do not specify --optimismContract")
 		}
 	}
 	if *nodeName == "" {
@@ -732,6 +750,7 @@ func runNode(cmd *cobra.Command, args []string) {
 	moonbeamContractAddr := eth_common.HexToAddress(*moonbeamContract)
 	neonContractAddr := eth_common.HexToAddress(*neonContract)
 	arbitrumContractAddr := eth_common.HexToAddress(*arbitrumContract)
+	optimismContractAddr := eth_common.HexToAddress(*optimismContract)
 	solAddress, err := solana_types.PublicKeyFromBase58(*solanaContract)
 	if err != nil {
 		logger.Fatal("invalid Solana contract address", zap.Error(err))

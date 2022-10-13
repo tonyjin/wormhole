@@ -46,6 +46,7 @@ func TestChainIDFromString(t *testing.T) {
 		{input: "terra2", output: ChainIDTerra2},
 		{input: "injective", output: ChainIDInjective},
 		{input: "arbitrum", output: ChainIDArbitrum},
+		{input: "optimism", output: ChainIDOptimism},
 		{input: "xpla", output: ChainIDXpla},
 		{input: "ethereum-ropsten", output: ChainIDEthereumRopsten},
 
@@ -71,6 +72,7 @@ func TestChainIDFromString(t *testing.T) {
 		{input: "Terra2", output: ChainIDTerra2},
 		{input: "Injective", output: ChainIDInjective},
 		{input: "Arbitrum", output: ChainIDArbitrum},
+		{input: "Optimism", output: ChainIDOptimism},
 		{input: "XPLA", output: ChainIDXpla},
 		{input: "Ethereum-ropsten", output: ChainIDEthereumRopsten},
 		{input: "Wormholechain", output: ChainIDWormchain},
@@ -168,6 +170,7 @@ func TestChainId_String(t *testing.T) {
 		{input: 21, output: "sui"},
 		{input: 22, output: "aptos"},
 		{input: 23, output: "arbitrum"},
+		{input: 24, output: "optimism"},
 		{input: 28, output: "xpla"},
 		{input: 10001, output: "ethereum-ropsten"},
 		{input: 3104, output: "wormholechain"},
