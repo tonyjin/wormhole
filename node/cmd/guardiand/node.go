@@ -1186,6 +1186,15 @@ func runNode(cmd *cobra.Command, args []string) {
 					return err
 				}
 			}
+			if shouldStart(optimismRPC) {
+				logger.Info("Starting Optimism watcher")
+				readiness.RegisterComponent(common.ReadinessOptimismSyncing)
+				chainObsvReqC[vaa.ChainIDOptimism] = make(chan *gossipv1.ObservationRequest, observationRequestBufferSize)
+				if err := supervisor.Run(ctx, "optimismwatch",
+					evm.NewEthWatcher(*optimismRPC, optimismContractAddr, "optimism", common.ReadinessOptimismSyncing, vaa.ChainIDOptimism, lockC, nil, 1, chainObsvReqC[vaa.ChainIDOptimism], *unsafeDevMode).Run); err != nil {
+					return err
+				}
+			}
 			if shouldStart(injectiveWS) {
 				logger.Info("Starting Injective watcher")
 				readiness.RegisterComponent(common.ReadinessInjectiveSyncing)
