@@ -1,7 +1,7 @@
 {
   "private": true,
-  "name": "wormhole-near",
-  "version": "1.0.0",
+  "name": "@wormhole-foundation/scripts-near",
+  "version": "0.0.1",
   "description": "Wormhole near support code",
   "keywords": [
     "near-protocol",
@@ -26,7 +26,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "regenerator-runtime": "^0.13.9",
-    "ts-node": "^10.9.1",
+    "ts-node": "^10.8.1",
     "web3": "^1.7.4",
     "web3-eth-abi": "^1.7.3",
     "web3-utils": "^1.7.3"
