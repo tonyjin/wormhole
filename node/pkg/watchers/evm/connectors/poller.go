@@ -213,12 +213,6 @@ func (b *BlockPollConnector) getBlock(ctx context.Context, logger *zap.Logger, n
 		)
 		return nil, fmt.Errorf("failed to unmarshal block: Number is nil")
 	}
-	d := big.Int(*m.Difficulty)
-	if b.isEthPoS && !b.hasEthSwitchedToPoS && d.Cmp(big.NewInt(0)) == 0 {
-		logger.Info("switching from latest to finalized", zap.Duration("delay", b.Delay))
-		b.SetEthSwitched()
-		return b.getBlock(ctx, logger, number, safe)
-	}
 	n := big.Int(*m.Number)
 	return &NewBlock{
 		Number: &n,
